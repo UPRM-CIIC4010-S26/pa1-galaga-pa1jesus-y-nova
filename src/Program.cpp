@@ -40,6 +40,12 @@ void Program::Update() {
         ManageEnemyRespawns();
         player->update();
 
+        if(Enemy::score >= LastLifeScore + 1000){
+            LastLifeScore += 1000;
+            if (lives < 5) lives++;
+            
+        }
+
         for (std::pair<std::pair<float, float>, Enemy*> p : Enemy::enemies) {
             if (p.second && HitBox::Collision(player->hitBox, p.second->hitBox)) {
                 Animation::animations.push_back(
@@ -75,9 +81,11 @@ void Program::Draw() {
     if (pauseFrames <= 0 && !gameOver) player->draw();
     for (Animation& a : Animation::animations) a.draw();
 
+    DrawText(("Score: " + std::to_string(Enemy::score)).c_str(), GetScreenWidth() / 2 - 50, 10, 24, WHITE);
+    
     for (int i = 0; i < lives; i++) {
          DrawTexturePro(ImageManager::SpriteSheet, Rectangle{0, 0, 17, 18}, 
-                   Rectangle{10.0f + i * 30, GetScreenHeight() - 30.0f, 20, 20}, 
+                   Rectangle{10.0f + i * 40, 50.0f, 34, 36}, 
                    Vector2{0, 0}, 0, WHITE);
     }
 
@@ -92,10 +100,9 @@ void Program::Draw() {
 
 void Program::ManageEnemyRespawns() {
     delay = std::max(delay - 1, 0);
-
     respawnCooldown -= 1;
     if (respawnCooldown <= 0) {
-        respawnCooldown = 1080;
+        respawnCooldown = std::max(300, 1080 - (Enemy::score / 100) * 10);
         for (std::pair<std::pair<float, float>, Enemy*>& p : Enemy::enemies) {
             if (!p.second && p.first.second != 150) {
                 int eType = GetRandomValue(1, 3);
@@ -156,6 +163,8 @@ void Program::KeyInputs() {
     if (!paused && !startup && IsKeyPressed('O')) gameOver = !gameOver;
     if (!gameOver && !paused && IsKeyPressed('I')) startup = !startup;
     if (IsKeyPressed('H')) HitBox::drawHitbox = !HitBox::drawHitbox;
+
+    if(!startup && !paused && !gameOver && IsKeyPressed('K')) Enemy::score += 500;
     
     if (gameOver && IsKeyPressed(KEY_ENTER)) {
         gameOver = false;
@@ -191,6 +200,9 @@ void Program::Reset() {
     count = 0;
     delay = 0;
     lives = 3;
+    Enemy::score = 0;
+    LastLifeScore = 0;
+    Enemy::score = 0;
 
     Enemy::enemies.push_back(std::pair<std::pair<float, float>, Enemy*> {
             std::pair<float, float>{350, 150}, 

@@ -1,5 +1,4 @@
 #pragma once
-
 #include <iostream>
 #include <string>
 #include "raylib-cpp/raylib-cpp.hpp"
@@ -19,7 +18,7 @@ class Program {
         int delay = 0;
         int lives = 3;
         int pauseFrames = 0;
-
+        int LastLifeScore = 0;
         bool startup = true;
         bool paused = false;
         bool gameOver = false;

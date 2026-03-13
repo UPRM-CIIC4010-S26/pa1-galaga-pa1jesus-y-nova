@@ -1,9 +1,9 @@
 #include "raylib.h"
-
 #include "resource_dir.h"
 #include "Program.hpp"
 
 int main ()
+
 {
 	SearchAndSetResourceDir("resources");
     InitAudioDevice();
