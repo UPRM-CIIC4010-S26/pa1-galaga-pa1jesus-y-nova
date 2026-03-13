@@ -11,8 +11,8 @@ Don't forget that you must also fill out an evaluation form in Moodle to conside
 
 ## Grading
 
-(STUDENT NUMBER HERE) (STUDENT NAME HERE) (STUDENT EMAIL HERE)
-(STUDENT NUMBER HERE) (STUDENT NAME HERE) (STUDENT EMAIL HERE)
+802-24-1769 Yadiel José Soto Pérez yadiel.soto3@upr.edu
+802-25-9557 Jesús Adrián Rodríguez González jesus.rodriguez80@upr.edu
 
 Any project that doesn't compile will receive a 0.
 
